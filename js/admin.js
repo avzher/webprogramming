@@ -23,8 +23,8 @@ $(document).ready(function(){
         $('#dashboard-link').trigger('click')
     }else if (url.endsWith('products')){
         $('#products-link').trigger('click')
-    }else{
-        $('#dashboard-link').trigger('click')
+    }else if (url.endsWith('accounts')){
+        $('#accounts-link').trigger('click')
     }
 
     function viewAnalytics(){
@@ -170,6 +170,27 @@ $(document).ready(function(){
         });
         
     }
+    function viewAccounts(){
+        $.ajax( {
+            type: 'GET',
+            url: '../products/view-accounts.php', // Adjust the URL based on your directory structure
+            dataType: 'html',
+            success: function(response){
+                $('.content-page').html(response);
+    
+                // Initialize DataTable for the accounts table
+                var table = $('#table-accounts').DataTable({
+                    dom: 'rtp',
+                    pageLength: 10,
+                    ordering: true, // Enables column sorting
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error("An error occurred: " + error);
+            }
+        });
+    }
+    
 
     function fetchCategories(){
         $.ajax({
