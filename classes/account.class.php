@@ -81,6 +81,31 @@ class Account{
 
         return $data;
     }
+    function getAllAccounts() {
+        $sql = "SELECT * FROM account";
+        $query = $this->db->connect()->prepare($sql);
+
+        if ($query->execute()) {
+            return $query->fetchAll(PDO::FETCH_ASSOC); // Fetch all accounts as associative arrays
+        }
+
+        return []; // Return an empty array if no accounts are found
+    }
+
+    // The delete() method removes an account from the database based on its ID.
+    function delete($recordID) {
+        // SQL query to delete an account by its ID.
+        $sql = "DELETE FROM account WHERE id = :recordID;";
+
+        // Prepare the SQL statement for execution.
+        $query = $this->db->connect()->prepare($sql);
+
+        // Bind the recordID parameter to the SQL query.
+        $query->bindParam(':recordID', $recordID);
+        
+        // Execute the query. If successful, return true; otherwise, return false.
+        return $query->execute();
+    }
 }
 
 // $obj = new Account();
